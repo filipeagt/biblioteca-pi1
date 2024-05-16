@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Biblioteca Social de Capela do Alto</h1>
+
+<p>Bem vindo a <strong>Biblioteca Social de Capela do Alto</strong>, este site foi desenvolvido para a disciplina de projeto integrador I do eixo de Computação da Univesp. E tem como objetivo promover a leitura por meio do compartilhamento de livros nas escolas.</p>
+<p>Navegue pelo menu lateral para ver os títulos e autores disponíveis ou faça login para cadastrar novos livros.</p>
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9GsYBG7keZlQcrvexm5bj-fjjE6rrkvoo3w95ex-QDw&s" alt="Biblioteca Social">
+
+<h2>A escola tem as seguintes contagens de registros:</h2>
+<ul>
+<li><strong>Livros:</strong> {{ num_books }}</li>
+<li><strong>Exemplares:</strong> {{ num_instances }}</li>
+<li><strong>Exemplares disponíveis:</strong> {{ num_instances_available }}</li>
+<li><strong>Autores:</strong> {{ num_autors }}</li>
+</ul>
+
+
+<p>Você visitou esta página {{ num_visits }} {% if num_visits != 1 %}vezes {% else %}vez{%endif%}.</p>
+
+{% endblock %}

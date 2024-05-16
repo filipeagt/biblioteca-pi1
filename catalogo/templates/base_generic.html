@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+
+  {% block title %}<title>Biblioteca Social de Capela do Alto</title>{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- STYLES CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/base.css' %}">
+
+  <!-- BOX ICONS CSS-->
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body id="body">
+  {% block sidebar %}
+  <div class="l-navbar" id="navbar">
+    <nav class="nav">
+        <div>
+            <a href="{% url 'index' %}" class="nav__logo">
+                <img src="{% static 'assets/icons/openlearn-univesp.png' %}" alt="" class="nav__logo-icon">
+                <span class="nav__logo-text">Biblioteca Social</span>
+            </a>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-chevron-right'></i>
+            </div>
+
+            <ul class="nav__list">
+                
+                <a href="{% url 'books' %}" class="nav__link">
+                    <i class='bx bx-book nav__icon' ></i>
+                    <span class="nav__text">Livros</span>
+                </a>
+                <a href="{% url 'autores' %}" class="nav__link">
+                    <i class='bx bx-group nav__icon' ></i>
+                    <span class="nav__text">Autores</span>
+                </a>
+                <a href="{% url 'gêneros' %}" class="nav__link">
+                    <i class='bx bx-heart nav__icon'></i>
+                    <span class="nav__text">Gêneros</span>
+                </a>
+                
+                {% if user.is_authenticated %}
+                <p style="color: #F5A623">Usuáro: {{ user.get_username }}</p>                
+                <a href="{% url 'logout'%}?next={{request.path}}" class="nav__link">           
+                    <i class='bx bx-log-out-circle nav__icon'></i>
+                    <span class="nav__text">Logout</span>
+                </a>
+                {% else %}
+                <a href="{% url 'login'%}?next={{request.path}}" class="nav__link">           
+                <i class='bx bx-log-in-circle nav__icon'></i>
+                <span class="nav__text">Login</span>
+                </a>      
+                {% endif %}
+                           
+                {% if user.is_staff %}
+                
+              <a href="{% url 'all-borrowed' %}" class="nav__link">
+                  <i class='bx bx-book-reader nav__icon'></i>
+                  <span class="nav__text">Empréstimos</span>
+              </a>
+              <p style="color: #F5A623">Cadastros</p>              
+              
+              {% if perms.catalogo.add_book %}
+              <a href="{% url 'book-create' %}" class="nav__link">
+                  <i class='bx bx-book-add nav__icon'></i>
+                  <span class="nav__text">Livro</span>
+              </a>
+              {% endif %}
+              {% if perms.catalogo.add_autor %}
+              <a href="{% url 'autor-create' %}" class="nav__link">
+                  <i class='bx bx-user nav__icon'></i>
+                  <span class="nav__text">Autor</span>
+              </a>
+              {% endif %}
+              {% if perms.catalogo.add_gênero %}
+              <a href="{% url 'gênero-create' %}" class="nav__link">
+                  <i class='bx bx-heart nav__icon' ></i>
+                  <span class="nav__text">Gênero</span>
+              </a>
+              {% endif %}
+              {% if perms.catalogo.add_bookinstance %}
+              <a href="{% url 'bookinstance-create' %}" class="nav__link">
+                  <i class='bx bx-copy nav__icon'></i>
+                  <span class="nav__text">Exemplar</span>
+              </a>
+              {% endif %}   
+              {% elif user.is_authenticated%}      
+              <a href="{% url 'my-borrowed' %}" class="nav__link">           
+                <i class='bx bx-book-reader nav__icon'></i>
+                <span class="nav__text">Empréstimos</span>
+              </a>
+            {% endif %}
+            </ul>
+        
+          
+        </div>
+        
+    </nav>
+  </div>
+  {% endblock %}
+
+  {% block content %}{% endblock %}
+
+  {% block pagination %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">anterior</a>
+                {% endif %}
+                <span class="page-current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">próxima</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+  {% endblock %}
+</body>
+<script src="{% static 'assets/js/base.js' %}"></script>
+</html>

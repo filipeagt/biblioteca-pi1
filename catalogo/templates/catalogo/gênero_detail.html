@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Gênero: {{ gênero.name }}</h1>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Livros por gênero</h4>
+
+<ul>
+  {% for copy in gênero.book_set.all %}
+  <li>
+    <a href="{{ copy.get_absolute_url }}">{{ copy.título }}</a> ({{copy.autor}})
+  </li>
+  {% empty %}
+  <li>Não existem livros deste gênero.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if perms.catalogo.change_gênero or perms.catalogo.delete_gênero %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.catalogo.change_gênero %}
+    <li><a href="{% url 'gênero-update' gênero.id %}">Atualizar gênero</a></li>
+    {% endif %}
+    {% if not gênero.book_set.all and perms.catalogo.gênero %}
+      <li><a href="{% url 'gênero-delete' gênero.id %}">Deletar gênero</a></li>
+    {% endif %}
+    </ul>
+  {% endif %}
+
+{% endblock %}

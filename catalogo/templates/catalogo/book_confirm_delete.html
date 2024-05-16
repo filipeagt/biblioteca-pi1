@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Deletar livro</h1>
+
+{% if book.bookinstance_set.all %}
+<p>Você não pode deletar este livro até que todos os exemplares tenham sido deletados:</p>
+
+<ul>
+{% for copy in book.bookinstance_set.all %}
+  <li><a href="{{ copy.get_absolute_url }}">{{copy.id}}</a> (Cópia: {{copy.imprint}})</li>
+{% endfor %}
+</ul>
+
+{% else %}
+<p>Você tem certeza que quer deletar o livro: {{ book }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Yes, delete.">
+</form>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Idioma: {{ language.name }}</h1>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Livros por idioma</h4>
+
+<ul>
+  {% for copy in language.book_set.all %}
+  <li>
+    <a href="{{ copy.get_absolute_url }}">{{ copy.title }}</a>
+  </li>
+  {% empty %}
+  <li>Não existem livros neste idioma.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if perms.catalogo.change_language or perms.catalogo.delete_language %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.catalogo.change_language %}
+      <li><a href="{% url 'language-update' language.id %}">Atualizar idioma</a></li>
+    {% endif %}
+    {% if not language.book_set.all and perms.catalogo.delete_language %}
+      <li><a href="{% url 'language-delete' language.id %}">Deletar idioma</a></li>
+    {% endif %}
+    </ul>
+  {% endif %}
+
+{% endblock %}

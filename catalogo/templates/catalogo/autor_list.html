@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Lista de Autores</h1>
+
+{% if autor_list %}
+  <ul>
+
+  {% for autor in autor_list %}
+    <li>
+      <a href="{{ autor.get_absolute_url }}">
+      {{ autor }}
+      </a>
+    </li>
+  {% endfor %}
+
+ </ul>
+{% else %}
+  <p>Não existem autores cadastrados.</p>
+{% endif %}
+        
+        
+        
+{% endblock %}
+

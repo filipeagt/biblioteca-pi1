@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Exemplar: {{ bookinstance.book.título }}</h1>
+<img src="{{ bookinstance.book.capa }}" alt="Capa" height="280">
+<p><strong>Autor:</strong> <a href="{{ bookinstance.book.author.get_absolute_url }}">{{ bookinstance.book.autor }}</a></p>
+
+
+<p><strong>Status:</strong> {{ bookinstance.get_status_display }} {% if bookinstance.status != 'a' %} (Devolução: {{bookinstance.due_back}}){% endif %}</p>
+{% if perms.catalogo.change_bookinstance %}
+      <!--a href="{% url 'bookinstance-update' bookinstance.id %}">Empréstimo</a-->
+      <form action="{% url 'bookinstance-update' bookinstance.id %}">
+        <input type="submit" value="Empréstimo" />
+      </form>
+{% endif %}
+
+<hr>
+<ul>
+  <li>
+    <a href="{{ bookinstance.book.get_absolute_url }}">Todos os exemplares</a></p>
+  </li>
+</ul>
+{% endblock %}
+
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if perms.catalogo.change_bookinstance or perms.catalogo.delete_bookinstance %}
+  <hr>
+  <ul class="sidebar-nav">    
+    {% if perms.catalogo.delete_bookinstance %}
+      <li><a href="{% url 'bookinstance-delete' bookinstance.id %}">Deletar Exemplar</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
+{% endblock %}

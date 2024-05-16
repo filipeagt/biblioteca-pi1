@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Lista de Livros</h1>
+
+    {% if book_list %}
+    <ul>
+
+      {% for book in book_list %}
+      <li>        
+        <a href="{{ book.get_absolute_url }}"><img src="{{ book.capa }}" alt="Capa" height="180"><p>{{ book.título }}</a> ({{book.autor}})</p>
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>Não existem livros cadastrados.</p>
+    {% endif %}       
+{% endblock %}
+
