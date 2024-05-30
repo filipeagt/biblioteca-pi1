@@ -86,7 +86,7 @@ a {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .nav__logo {
