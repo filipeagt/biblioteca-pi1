@@ -1,8 +1,6 @@
 from django.db import models
 
-# Create your models here.
-
-from django.urls import reverse  # To generate URLS by reversing URL patterns
+from django.urls import reverse  
 
 
 class Gênero(models.Model):
