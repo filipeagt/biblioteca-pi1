@@ -6,7 +6,7 @@
     <ul>
       {% for bookinst in bookinstance_list %}
       <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'bookinstance-detail' bookinst.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }}) {% if user.is_staff %}- {{ bookinst.borrower }}{% endif %} {% if perms.catalogo.can_mark_returned %}- <a href="{% url 'renew-book-librarian' bookinst.id %}">Renovar</a>  {% endif %}
+        <a href="{% url 'bookinstance-detail' bookinst.pk %}">{{bookinst.book.título}}</a> ({{ bookinst.due_back }}) {% if user.is_staff %}- {{ bookinst.borrower }}{% endif %} {% if perms.catalogo.can_mark_returned %}- <a href="{% url 'renew-book-librarian' bookinst.id %}">Renovar</a>  {% endif %}
       </li>
       {% empty %}
       <li>Não existem exemplares disponíveis.</li>
