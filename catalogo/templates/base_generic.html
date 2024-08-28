@@ -43,7 +43,7 @@
                 </a>
                 
                 {% if user.is_authenticated %}
-                <p style="color: #F5A623">Usuáro: {{ user.get_username }}</p>                
+                <p style="color: #F5A623">Usuário: {{ user.get_username }}</p>                
                 <a href="{% url 'logout'%}?next={{request.path}}" class="nav__link">           
                     <i class='bx bx-log-out-circle nav__icon'></i>
                     <span class="nav__text">Logout</span>
