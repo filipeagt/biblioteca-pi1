@@ -43,7 +43,10 @@ class BookListView(generic.ListView):
         if pesquisa == None:
             pesquisa = ''
         lista_objetos = Book.objects.filter(
-            Q(título__icontains=pesquisa) #| Q(autor__icontains=pesquisa) | Q(gênero__icontains=pesquisa)
+            Q(título__icontains=pesquisa) | 
+            Q(autor__nome__icontains=pesquisa) | 
+            Q(autor__sobrenome__icontains=pesquisa) |
+            Q(gênero__name__icontains=pesquisa)
         )
         return lista_objetos
 
