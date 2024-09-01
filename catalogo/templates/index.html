@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<form action="" method="get" style="text-align: center;">
+<form action="{% url 'books' %}" method="get" style="text-align: center;">
+    {% csrf_token %}
     <input type="search" name="pesquisa" id="pesquisa" placeholder="Livro, autor ou gênero" style="height: 3em; width: 400px; max-width: 50vw;">
     <input type="submit" value="Pesquisar" style="height: 3em;">
 </form>

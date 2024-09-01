@@ -1,6 +1,8 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 
 # Create your views here.
+from django.db.models import Q # Para barra de pesquisa
 
 from .models import Book, Autor, BookInstance, Gênero, Language
 
@@ -35,6 +37,15 @@ class BookListView(generic.ListView):
     """Generic class-based view for a list of books."""
     model = Book
     paginate_by = 10
+
+    def get_queryset(self): #Para barra de pesquisa
+        pesquisa = self.request.GET.get('pesquisa')
+        if pesquisa == None:
+            pesquisa = ''
+        lista_objetos = Book.objects.filter(
+            Q(título__icontains=pesquisa) #| Q(autor__icontains=pesquisa) | Q(gênero__icontains=pesquisa)
+        )
+        return lista_objetos
 
 class BookDetailView(generic.DetailView):
     """Generic class-based detail view for a book."""
