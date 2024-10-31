@@ -43,7 +43,7 @@ class Book(models.Model):
     # Foreign Key used because book can only have one author, but authors can have multiple books.
     # Author as a string rather than object because it hasn't been declared yet in file.
     resumo = models.TextField(
-        max_length=1000, help_text="Insira uma breve descrição do livro.")
+        max_length=1000, help_text="Insira uma breve descrição do livro.")    
     #isbn = models.CharField('ISBN', max_length=13,
      #                       unique=True,
       #                      help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn'
@@ -58,6 +58,7 @@ class Book(models.Model):
     idade = models.PositiveSmallIntegerField('Faixa etária', default=0)
 
     capa = models.TextField(max_length=1000, help_text="Insira um link para a imagem da capa do livro.", default="https://vectorportal.com/storage/book-vector(1).jpg")
+    alt = models.TextField('Texto alternativo',max_length=1000, help_text="Insira uma descrição da capa para melhorar a acessibilidade.")
 
     class Meta:
         ordering = ['título', 'autor']

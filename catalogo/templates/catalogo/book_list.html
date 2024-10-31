@@ -8,7 +8,7 @@
 
       {% for book in book_list %}
       <li style="display: inline-block; width: 200px; margin: 20px; text-align: center;">        
-        <p><a href="{{ book.get_absolute_url }}"><img src="{{ book.capa }}" alt="Capa do livro" height="180" style="display: block; margin: auto;">{{ book.título }}</a><br>({{book.autor}})</p>
+        <p><a href="{{ book.get_absolute_url }}"><img src="{{ book.capa }}" alt="{{ book.alt }}" height="180" style="display: block; margin: auto;">{{ book.título }}</a><br>({{book.autor}})</p>
       </li>
       {% endfor %}
 

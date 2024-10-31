@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>Exemplar: {{ bookinstance.book.título }}</h1>
-<img src="{{ bookinstance.book.capa }}" alt="Capa" height="280">
+<img src="{{ bookinstance.book.capa }}" alt="{{ bookinstance.book.alt }}" height="280">
 <p><strong>Autor:</strong> <a href="{{ bookinstance.book.author.get_absolute_url }}">{{ bookinstance.book.autor }}</a></p>
 
 
