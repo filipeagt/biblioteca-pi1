@@ -6,6 +6,10 @@ from django.db.models import Q # Para barra de pesquisa
 
 from .models import Book, Autor, BookInstance, Gênero, Language
 
+from rest_framework import permissions, viewsets
+from .serializers import BookSerializer
+
+
 def index(request):
     """View function for home page of site."""
     # Generate counts of some of the main objects
@@ -49,6 +53,7 @@ class BookListView(generic.ListView):
             Q(gênero__name__icontains=pesquisa)
         )
         return lista_objetos
+    
 
 class BookDetailView(generic.DetailView):
     """Generic class-based detail view for a book."""
@@ -278,3 +283,13 @@ class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
     model = BookInstance
     success_url = reverse_lazy('bookinstances')
     permission_required = 'catalogo.delete_bookinstance'
+
+
+#DRF
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Book.objects.all().order_by('título')
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

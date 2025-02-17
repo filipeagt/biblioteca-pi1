@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from . import views
 
@@ -74,3 +75,11 @@ urlpatterns += [
          views.BookInstanceDelete.as_view(), name='bookinstance-delete'),
 ]
 
+#DRF
+router = routers.DefaultRouter()
+router.register(r'books', views.BookViewSet)
+
+urlpatterns += [
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]
