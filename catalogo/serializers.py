@@ -2,7 +2,8 @@ from .models import Book, Autor, BookInstance, Gênero, Language
 from rest_framework import serializers
 
 
-class BookSerializer(serializers.HyperlinkedModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['título', 'nome', 'capa']
+        fields = ['título', 'autor', 'capa']
+        depth = 1

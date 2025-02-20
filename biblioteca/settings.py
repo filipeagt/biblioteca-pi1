@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalogo.apps.CatalogoConfig',
-    'rest_framework', 
+    'rest_framework',
+    'corsheaders', 
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'biblioteca.urls'
@@ -176,3 +179,5 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
