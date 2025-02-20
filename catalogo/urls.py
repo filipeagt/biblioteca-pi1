@@ -77,7 +77,7 @@ urlpatterns += [
 
 #DRF
 router = routers.DefaultRouter()
-router.register(r'books', views.BookViewSet)
+router.register(r'livros', views.BookViewSet)
 
 urlpatterns += [
     path('api/', include(router.urls)),
