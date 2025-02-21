@@ -76,10 +76,11 @@ urlpatterns += [
 ]
 
 #DRF
-router = routers.DefaultRouter()
-router.register(r'livros', views.BookViewSet)
+#router = routers.DefaultRouter()
+#router.register(r'livros', views.BookViewSet)
 
 urlpatterns += [
-    path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api/livros/', views.BookViewSet.as_view({'get': 'list'}), name='livros'),
+    path('api/livros/<int:pk>', views.BookViewSet.as_view({'get': 'retrieve'}), name='detalhes-livros'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

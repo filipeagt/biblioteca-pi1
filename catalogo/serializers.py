@@ -5,5 +5,5 @@ from rest_framework import serializers
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['título', 'autor', 'capa']
+        fields = '__all__'
         depth = 1

@@ -292,4 +292,4 @@ class BookViewSet(viewsets.ModelViewSet):
     """
     queryset = Book.objects.all().order_by('título')
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
