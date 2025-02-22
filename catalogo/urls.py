@@ -80,7 +80,8 @@ urlpatterns += [
 #router.register(r'livros', views.BookViewSet)
 
 urlpatterns += [
-    path('api/livros/', views.BookViewSet.as_view({'get': 'list'}), name='livros'),
-    path('api/livros/<int:pk>', views.BookViewSet.as_view({'get': 'retrieve'}), name='detalhes-livros'),
+    path('api/', views.api_root),
+    path('api/livros/', views.BookViewSet.as_view({'get': 'list'}), name='lista-livros'),
+    path('api/livros/<int:pk>/', views.BookViewSet.as_view({'get': 'retrieve'}), name='detalhes-livros'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

@@ -8,6 +8,10 @@ from .models import Book, Autor, BookInstance, Gênero, Language
 
 from rest_framework import permissions, viewsets
 from .serializers import BookSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse as reverse_drf
+
 
 
 def index(request):
@@ -286,10 +290,29 @@ class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
 
 
 #DRF
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'livros': reverse_drf('lista-livros', request=request, format=format),
+        
+    })
+
+
 class BookViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint que permite a edição ou visualização dos livros.
     """
     queryset = Book.objects.all().order_by('título')
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def get_queryset(self): #Para pesquisa
+        pesquisa = self.request.GET.get('pesquisa')
+        if pesquisa == None:
+            pesquisa = ''
+        lista_objetos = Book.objects.filter(
+            Q(título__icontains=pesquisa) | 
+            Q(autor__nome__icontains=pesquisa) | 
+            Q(autor__sobrenome__icontains=pesquisa) |
+            Q(gênero__name__icontains=pesquisa)
+        )
+        return lista_objetos
