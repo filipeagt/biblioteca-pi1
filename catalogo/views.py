@@ -7,7 +7,7 @@ from django.db.models import Q # Para barra de pesquisa
 from .models import Book, Autor, BookInstance, Gênero, Language
 
 from rest_framework import permissions, viewsets
-from .serializers import BookSerializer
+from .serializers import LivroSerializer, AutorSerializer, GeneroSerializer, ExemplarSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse_drf
@@ -294,16 +294,18 @@ class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
 def api_root(request, format=None):
     return Response({
         'livros': reverse_drf('lista-livros', request=request, format=format),
-        
+        'autores': reverse_drf('lista-autores', request=request, format=format),
+        'generos': reverse_drf('lista-generos', request=request, format=format),
+        'exemplares': reverse_drf('lista-exemplares', request=request, format=format),
     })
 
 
-class BookViewSet(viewsets.ModelViewSet):
+class LivroViewSet(viewsets.ModelViewSet):
     """
     API endpoint que permite a edição ou visualização dos livros.
     """
     queryset = Book.objects.all().order_by('título')
-    serializer_class = BookSerializer
+    serializer_class = LivroSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get_queryset(self): #Para pesquisa
         pesquisa = self.request.GET.get('pesquisa')
@@ -316,3 +318,27 @@ class BookViewSet(viewsets.ModelViewSet):
             Q(gênero__name__icontains=pesquisa)
         )
         return lista_objetos
+
+class AutorViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite a edição ou visualização dos autores.
+    """
+    queryset = Autor.objects.all().order_by('nome', 'sobrenome')
+    serializer_class = AutorSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class GeneroViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite a edição ou visualização dos gêneros.
+    """
+    queryset = Gênero.objects.all().order_by('name')
+    serializer_class = GeneroSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class ExemplarViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite a edição ou visualização dos exemplares.
+    """
+    queryset = BookInstance.objects.all().order_by('id')
+    serializer_class = ExemplarSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

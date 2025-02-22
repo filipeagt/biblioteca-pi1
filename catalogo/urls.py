@@ -1,5 +1,5 @@
 from django.urls import path, include
-from rest_framework import routers
+#from rest_framework import routers
 
 from . import views
 
@@ -7,16 +7,16 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('books/', views.BookListView.as_view(), name='books'),
-    path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+    path('book/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
     path('autores/', views.AutorListView.as_view(), name='autores'),
-    path('autor/<int:pk>',
+    path('autor/<int:pk>/',
          views.AutorDetailView.as_view(), name='autor-detail'),
 ]
 
 
 urlpatterns += [
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
-    path(r'borrowed/', views.LoanedBooksAllListView.as_view(), name='all-borrowed'),  # Added for challenge
+    path('borrowed/', views.LoanedBooksAllListView.as_view(), name='all-borrowed'),  # Added for challenge
 ]
 
 
@@ -76,12 +76,15 @@ urlpatterns += [
 ]
 
 #DRF
-#router = routers.DefaultRouter()
-#router.register(r'livros', views.BookViewSet)
-
 urlpatterns += [
     path('api/', views.api_root),
-    path('api/livros/', views.BookViewSet.as_view({'get': 'list'}), name='lista-livros'),
-    path('api/livros/<int:pk>/', views.BookViewSet.as_view({'get': 'retrieve'}), name='detalhes-livros'),
+    path('api/livros/', views.LivroViewSet.as_view({'get': 'list'}), name='lista-livros'),
+    path('api/livros/<int:pk>/', views.LivroViewSet.as_view({'get': 'retrieve'}), name='detalhes-livros'),
+    path('api/autores/', views.AutorViewSet.as_view({'get': 'list'}), name='lista-autores'),
+    path('api/autores/<int:pk>/', views.AutorViewSet.as_view({'get': 'retrieve'}), name='detalhes-autores'),
+    path('api/generos/', views.GeneroViewSet.as_view({'get': 'list'}), name='lista-generos'),
+    path('api/generos/<int:pk>/', views.GeneroViewSet.as_view({'get': 'retrieve'}), name='detalhes-generos'),
+    path('api/exemplares/', views.ExemplarViewSet.as_view({'get': 'list'}), name='lista-exemplares'),
+    path('api/exemplares/<int:pk>/', views.ExemplarViewSet.as_view({'get': 'retrieve'}), name='detalhes-exemplares'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
