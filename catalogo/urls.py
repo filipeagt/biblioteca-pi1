@@ -7,9 +7,9 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('books/', views.BookListView.as_view(), name='books'),
-    path('book/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
+    path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('autores/', views.AutorListView.as_view(), name='autores'),
-    path('autor/<int:pk>/',
+    path('autor/<int:pk>',
          views.AutorDetailView.as_view(), name='autor-detail'),
 ]
 
