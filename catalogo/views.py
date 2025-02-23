@@ -351,6 +351,16 @@ class ExemplarViewSet(viewsets.ModelViewSet):
     """
     API endpoint que permite a edição ou visualização dos exemplares.
     """
-    queryset = BookInstance.objects.all().order_by('id')
+    #queryset = BookInstance.objects.all().order_by('id')
     serializer_class = ExemplarSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def get_queryset(self): #Para pesquisa
+        livro_id = self.request.GET.get('livro_id')
+        lista_objetos = []
+        if livro_id != None and livro_id != '':
+            lista_objetos += BookInstance.objects.filter(
+                Q(book__id__exact=livro_id)
+            )
+        else:
+            lista_objetos = BookInstance.objects.all().order_by('id')
+        return lista_objetos
