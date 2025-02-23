@@ -23,5 +23,5 @@ class GeneroSerializer(serializers.ModelSerializer):
 class ExemplarSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookInstance
-        fields = '__all__'
+        fields = ['id', 'due_back', 'status', 'book']
         depth = 2

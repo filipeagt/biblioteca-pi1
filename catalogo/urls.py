@@ -85,6 +85,6 @@ urlpatterns += [
     path('api/generos/', views.GeneroViewSet.as_view({'get': 'list'}), name='lista-generos'),
     path('api/generos/<int:pk>/', views.GeneroViewSet.as_view({'get': 'retrieve'}), name='detalhes-generos'),
     path('api/exemplares/', views.ExemplarViewSet.as_view({'get': 'list'}), name='lista-exemplares'),
-    path('api/exemplares/<int:pk>/', views.ExemplarViewSet.as_view({'get': 'retrieve'}), name='detalhes-exemplares'),
+    path('api/exemplares/<uuid:pk>/', views.ExemplarViewSet.as_view({'get': 'retrieve'}), name='detalhes-exemplares'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
