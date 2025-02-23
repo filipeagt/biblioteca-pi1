@@ -304,19 +304,31 @@ class LivroViewSet(viewsets.ModelViewSet):
     """
     API endpoint que permite a edição ou visualização dos livros.
     """
-    queryset = Book.objects.all().order_by('título')
+    #queryset = Book.objects.all().order_by('título')
     serializer_class = LivroSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get_queryset(self): #Para pesquisa
         pesquisa = self.request.GET.get('pesquisa')
-        if pesquisa == None:
-            pesquisa = ''
-        lista_objetos = Book.objects.filter(
-            Q(título__icontains=pesquisa) | 
-            Q(autor__nome__icontains=pesquisa) | 
-            Q(autor__sobrenome__icontains=pesquisa) |
-            Q(gênero__name__icontains=pesquisa)
-        )
+        autor_id = self.request.GET.get('autor_id')
+        genero_id = self.request.GET.get('genero_id')
+        lista_objetos = []
+        if pesquisa != None:
+            lista_objetos += Book.objects.filter(
+                Q(título__icontains=pesquisa) | 
+                Q(autor__nome__icontains=pesquisa) | 
+                Q(autor__sobrenome__icontains=pesquisa) |
+                Q(gênero__name__icontains=pesquisa)
+            )
+        if autor_id != None and autor_id != '':
+            lista_objetos += Book.objects.filter(
+                Q(autor__id__exact=autor_id)
+            )
+        if genero_id != None and genero_id != '':
+            lista_objetos += Book.objects.filter(
+                Q(gênero__id__exact=genero_id)
+            )
+        if genero_id == autor_id == pesquisa == None:
+            lista_objetos = Book.objects.all().order_by('título')
         return lista_objetos
 
 class AutorViewSet(viewsets.ModelViewSet):
